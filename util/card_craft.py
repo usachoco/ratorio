@@ -204,7 +204,6 @@ if __name__ == "__main__":
         config = yaml.safe_load(f)
 
     for enchant_info in config['card_list']:
-        print(f'{enchant_info["name"]} を処理しています...')
 
     # ------------------------------------------------------
     #  card.dat.js
@@ -222,15 +221,9 @@ if __name__ == "__main__":
                 record += getCapabilityRecord(capability)
         record += "0];"
         card_dat_js.append(record)
+        if 'None' in record:
+            print(f'エラー：{enchant_info["name"]} に空のデータが挿入されました')
         
-        # カード配列の設定
-        # js側で配列をメンテすることになったのでコメントアウト
-        # if card_type < 8:
-        #     # 武器カード(1)だけは全部位カード配列(0)に入れないとなぜか表示されないので暫定処理
-        #     card_type = 0 if card_type == 1 else card_type
-        #     record = f"CardSortOBJ[{card_type}].push({card_id});"
-        #     card_dat_js.append(record)
-
         # card.dat.js に記述すべきセット効果の出力
         if 'set_list' in enchant_info:
             card_to_set_record = f"CardIdToSetIdMap[{base_id}] = ["
@@ -241,6 +234,8 @@ if __name__ == "__main__":
                     record += getCapabilityRecord(capability)
                 record += "0];"
                 card_dat_js.append(record)
+                if 'None' in record:
+                    print(f'エラー：{enchant_info["name"]} に空のデータが挿入されました')
 
         # ------------------------------------------------------
         #  itemset.dat.js

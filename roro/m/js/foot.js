@@ -23802,6 +23802,16 @@ function GetCastFixOfSkillForCastTimeFixed(skillId) {
 	}
 
 
+	//----------------------------------------------------------------
+	// 「潜在解放ジェネティックIII」の「ハウリングオブマンドラゴラ」固定詠唱 0.5 秒短縮の打ち消し
+	//----------------------------------------------------------------
+	if (skillId == SKILL_ID_HOWLING_OF_MANDRAGORA) {
+		if (CardNumSearch(CARD_SET_ID_ENCHANT_GOKETSU_SENZAI_KAIHO_GENETIC_3) > 0) {
+			if (EquipNumSearch(ITEM_SET_ID_NOBLESSE_OBLIGE_GRACE_CULTIVATION_COAT) > 0) {
+				castfix += 500;
+			}
+		}
+	}
 
 	//----------------------------------------------------------------
 	// 「ファフニールヘルム」の、「ウォータードラゴンブレス」短縮
@@ -25288,6 +25298,20 @@ function GetCoolFixOfSkill(skillId) {
 		}
 	}
 
+	
+	//----------------------------------------------------------------
+	// 「潜在解放（ギロチンクロスIII）」の「ハルシネーションウォーク」CT 45 秒短縮を無効化する
+	//----------------------------------------------------------------
+	if (skillId == SKILL_ID_HALLUCINATION_WALK) {
+		if (CardNumSearch(CARD_SET_ID_ENCHANT_GOKETSU_SENZAI_KAIHO_GUILLOTINE_CROSS_3) > 0) {
+			eqpnum = EquipNumSearch(ITEM_ID_SHIKKOUSHANO_SHOES);
+			eqpnum += EquipNumSearch(ITEM_ID_AVARECO);
+			eqpnum += EquipNumSearch(ITEM_ID_END_OF_THE_WORLD);
+			if (eqpnum > 0) {
+				coolfix += 45 * 1000;
+			}
+		}
+	}
 
 
 	//----------------------------------------------------------------
