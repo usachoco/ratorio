@@ -11798,6 +11798,12 @@ function ApplyResistElement(mobData, dmg) {
 			wX -= 50;
 		}
 	}
+	// 火属性武器、かつ、クライマックスブルーム状態の場合
+	if ((bufLv = n_B_IJYOU[MOB_CONF_DEBUF_ID_CLIMAX_BLOOM]) > 0) {
+		if (n_A_Weapon_zokusei == ELM_ID_FIRE) {
+			wX -= 50;
+		}
+	}
 	// 敵が対プレイヤーの場合、対プレイヤー設定欄の属性耐性を適用
 	if(mobData[0] == MONSTER_ID_PLAYER){
 		wX += n_B_TAISEI[MOB_CONF_PLAYER_ID_MU_ZOKUSEI_TAISEI + n_A_Weapon_zokusei];

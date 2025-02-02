@@ -782,7 +782,6 @@ function InitMobConfDebufData() {
 	MobConfDebufOBJ[MobConfDebufId] = MobConfDebufData;
 	MobConfDebufId++;
 
-	 
 	MOB_CONF_DEBUF_ID_SEIYU_SENREI_DEBUFF = MobConfDebufId;
 	MobConfDebufData = [
 		MobConfDebufId,
@@ -794,7 +793,6 @@ function InitMobConfDebufData() {
 	];
 	MobConfDebufOBJ[MobConfDebufId] = MobConfDebufData;
 	MobConfDebufId++;
-
 
 	MOB_CONF_DEBUF_ID_SOUND_BLEND = MobConfDebufId;
 	MobConfDebufData = [
@@ -832,14 +830,24 @@ function InitMobConfDebufData() {
 	MobConfDebufOBJ[MobConfDebufId] = MobConfDebufData;
 	MobConfDebufId++;
 
+	MOB_CONF_DEBUF_ID_CLIMAX_BLOOM = MobConfDebufId;
+	MobConfDebufData = [
+		MobConfDebufId,
+		MobConfDebufText("クライマックスブルーム状態"),
+		MobConfDebufControlType(CONTROL_TYPE_CHECKBOX),
+		MobConfDebufDefaultValue(0),
+		MobConfDebufMinValue(0),
+		MobConfDebufMaxValue(1)
+	];
+	MobConfDebufOBJ[MobConfDebufId] = MobConfDebufData;
+	MobConfDebufId++;
+
 	//----------------------------------------------------------------
 	// データ定義数チェック
 	//----------------------------------------------------------------
 	if (MOB_CONF_DEBUF_LIMIT < MobConfDebufOBJ.length) {
 		alert("モンスター状態異常　定義数超過");
 	}
-
-
 
 	//----------------------------------------------------------------
 	// 状態異常設定変数配列を初期化
@@ -852,8 +860,6 @@ function InitMobConfDebufData() {
 			n_B_IJYOU[idx] = 0;
 		}
 	}
-
-
 
 	//----------------------------------------------------------------
 	// 表示順序に従い、状態異常データ定義を再配列
@@ -917,16 +923,13 @@ function InitMobConfDebufData() {
 
 	MobConfDebufOBJSorted[MobConfDebufOBJSorted.length] = MobConfDebufOBJ[MOB_CONF_DEBUF_ID_JACK_FROST_NOVA];
 	MobConfDebufOBJSorted[MobConfDebufOBJSorted.length] = MobConfDebufOBJ[MOB_CONF_DEBUF_ID_CLIMAX_QUAKE];
+	MobConfDebufOBJSorted[MobConfDebufOBJSorted.length] = MobConfDebufOBJ[MOB_CONF_DEBUF_ID_CLIMAX_BLOOM];
 
 	// 最大 80 個まで
 
 	MobConfDebufOBJ = MobConfDebufOBJSorted;
 
 }
-
-
-
-
 
 /**
  * モンスター状態異常設定テーブルを構築する.
@@ -955,11 +958,8 @@ function BuildUpMobConfDebufSelectArea(objRoot, bAsExpand) {
 	var objOption = null;
 	var objLabel = null;
 
-
-
 	// 引数のルートオブジェクト配下を一度全削除
 	HtmlRemoveAllChild(objRoot);
-
 
 	// 設定欄のテーブルを生成
 	objTable = document.createElement("table");
@@ -968,8 +968,6 @@ function BuildUpMobConfDebufSelectArea(objRoot, bAsExpand) {
 
 	objTbody = document.createElement("tbody");
 	objTable.appendChild(objTbody);
-
-
 
 	// 設定欄テーブルのヘッダ部分を生成
 	objTr = document.createElement("tr");
@@ -994,8 +992,6 @@ function BuildUpMobConfDebufSelectArea(objRoot, bAsExpand) {
 	objLabel.setAttribute("for", "OBJID_INPUT_MOB_CONF_DEBUF_SWITCH");
 	HtmlCreateTextNode("モンスター状態異常設定", objLabel);
 
-
-
 	// 展開表示でなければ、ヘッダだけ更新して終了
 	if (!bAsExpand) {
 		// ヘッダ更新
@@ -1004,21 +1000,15 @@ function BuildUpMobConfDebufSelectArea(objRoot, bAsExpand) {
 		return;
 	}
 
-
-
 	// モンスター状態異常設定定義をループして、設定欄を構築する
 	for (idx = 0; idx < MobConfDebufOBJ.length; idx++) {
 
 		// モンスター状態異常設定ＩＤを取得
 		confId = MobConfDebufOBJ[idx][MOB_CONF_DEBUF_DATA_INDEX_ID];
 
-
-
 		// 設定欄用のテーブル行を生成
 		objTr = document.createElement("tr");
 		objTbody.appendChild(objTr);
-
-
 
 		// 表示名の欄を生成
 		objTd = document.createElement("td");
@@ -1028,15 +1018,11 @@ function BuildUpMobConfDebufSelectArea(objRoot, bAsExpand) {
 		objText = document.createTextNode(confText);
 		objTd.appendChild(objText);
 
-
-
 		// 設定値の欄を生成
 		objTd = document.createElement("td");
 		objTr.appendChild(objTd);
 
 		controlType = MobConfDebufOBJ[idx][MOB_CONF_DEBUF_DATA_INDEX_CONTROL_TYPE];
-
-
 
 		// 設定方法が数値選択方式の場合
 		switch (controlType) {
@@ -1060,8 +1046,6 @@ function BuildUpMobConfDebufSelectArea(objRoot, bAsExpand) {
 
 			break;
 
-
-
 		// 設定方法がチェック方式の場合
 		case CONTROL_TYPE_CHECKBOX:
 
@@ -1079,8 +1063,6 @@ function BuildUpMobConfDebufSelectArea(objRoot, bAsExpand) {
 
 			break;
 
-
-
 		// 設定方法が数値入力方式の場合
 		case CONTROL_TYPE_TEXTBOX_NUMBER:
 
@@ -1096,8 +1078,6 @@ function BuildUpMobConfDebufSelectArea(objRoot, bAsExpand) {
 			objInput.setAttribute("value", MobConfDebufOBJ[idx][MOB_CONF_DEBUF_DATA_INDEX_DEFAULT_VALUE]);
 
 			break;
-
-
 
 		// 設定方法が特殊方式の場合
 		case CONTROL_TYPE_SELECTBOX_SPECIAL:
@@ -1134,18 +1114,12 @@ function BuildUpMobConfDebufSelectArea(objRoot, bAsExpand) {
 
 	}
 
-
-
 	// 変数の値をもとに、設定欄の各コントロールを同期
 	SyncronizeMobConfDebufSettingsVarToCtrl();
 
 	// ヘッダ更新
 	RefreshMobConfDebufSelectAreaHeader();
 }
-
-
-
-
 
 /**
  * モンスター状態異常設定欄の状態を同期させる（変数の値をコントロール部品へ反映）.
@@ -1160,15 +1134,11 @@ function SyncronizeMobConfDebufSettingsVarToCtrl() {
 	var objSelect = null;
 	var objInput = null;
 
-
-
 	// モンスター状態異常設定定義をループして、設定欄の状態を同期
 	for (idx = 0; idx < MobConfDebufOBJ.length; idx++) {
 
 		confId = MobConfDebufOBJ[idx][MOB_CONF_DEBUF_DATA_INDEX_ID];
 		controlType = MobConfDebufOBJ[idx][MOB_CONF_DEBUF_DATA_INDEX_CONTROL_TYPE];
-
-
 
 		switch (controlType) {
 
@@ -1180,8 +1150,6 @@ function SyncronizeMobConfDebufSettingsVarToCtrl() {
 			objSelect.value = n_B_IJYOU[confId];
 
 			break;
-
-
 
 		// 設定方法がチェック方式の場合
 		case CONTROL_TYPE_CHECKBOX:
@@ -1198,8 +1166,6 @@ function SyncronizeMobConfDebufSettingsVarToCtrl() {
 
 			break;
 
-
-
 		// 設定方法が数値入力方式の場合
 		case CONTROL_TYPE_TEXTBOX_NUMBER:
 		case CONTROL_TYPE_TEXTBOX_SPECIAL:
@@ -1208,8 +1174,6 @@ function SyncronizeMobConfDebufSettingsVarToCtrl() {
 			objInput.value = n_B_IJYOU[confId];
 
 			break;
-
-
 
 		// 設定方法が特殊方式の場合
 		case CONTROL_TYPE_SPECIAL:
@@ -1221,10 +1185,6 @@ function SyncronizeMobConfDebufSettingsVarToCtrl() {
 		}
 	}
 }
-
-
-
-
 
 /**
  * モンスター状態異常設定欄の状態を同期させる（コントロール部品の状態を変数へ反映）.
@@ -1242,15 +1202,11 @@ function SyncronizeMobConfDebufSettingsCtrlToVar() {
 	var objSelect = null;
 	var objInput = null;
 
-
-
 	// モンスター状態異常設定定義をループして、設定欄の状態をもとに変数を同期
 	for (idx = 0; idx < MobConfDebufOBJ.length; idx++) {
 
 		confId = MobConfDebufOBJ[idx][MOB_CONF_DEBUF_DATA_INDEX_ID];
 		controlType = MobConfDebufOBJ[idx][MOB_CONF_DEBUF_DATA_INDEX_CONTROL_TYPE];
-
-
 
 		switch (controlType) {
 
@@ -1263,8 +1219,6 @@ function SyncronizeMobConfDebufSettingsCtrlToVar() {
 
 			break;
 
-
-
 		// 設定方法がチェック方式の場合
 		case CONTROL_TYPE_CHECKBOX:
 		case CONTROL_TYPE_CHECKBOX_SPECIAL:
@@ -1272,8 +1226,6 @@ function SyncronizeMobConfDebufSettingsCtrlToVar() {
 			n_B_IJYOU[confId] = HtmlGetObjectCheckedById("OBJID_INPUT_MOB_CONF_DEBUF_" + confId, false);
 
 			break;
-
-
 
 		// 設定方法が数値入力方式の場合
 		case CONTROL_TYPE_TEXTBOX_NUMBER:
@@ -1290,8 +1242,6 @@ function SyncronizeMobConfDebufSettingsCtrlToVar() {
 
 			break;
 
-
-
 		// 設定方法が特殊方式の場合
 		case CONTROL_TYPE_SPECIAL:
 
@@ -1302,10 +1252,6 @@ function SyncronizeMobConfDebufSettingsCtrlToVar() {
 		}
 	}
 }
-
-
-
-
 
 /**
  * モンスター状態異常設定欄の展開スイッチクリックイベントハンドラ.
@@ -1326,10 +1272,6 @@ function OnClickMobConfDebufSwitch() {
 		RefreshMobConfDebufControlCSS();
 	}
 }
-
-
-
-
 
 /**
  * モンスター状態異常設定欄の設定値変更イベントハンドラ.
@@ -1352,10 +1294,6 @@ function OnChangeMobConfDebuf(bCalc) {
 	}
 }
 
-
-
-
-
 /**
  * モンスター状態異常設定テーブルのヘッダをリフレッシュする.
  */
@@ -1370,8 +1308,6 @@ function RefreshMobConfDebufSelectAreaHeader() {
 	var objSelect = null;
 	var objTd = null;
 
-
-
 	// モンスター状態異常設定定義をループして、設定欄の状態を検査
 	for (idx = 0; idx < MobConfDebufOBJ.length; idx++) {
 
@@ -1383,8 +1319,6 @@ function RefreshMobConfDebufSelectAreaHeader() {
 		}
 	}
 
-
-
 	// 設定状況に応じて、ヘッダ部分の表示を更新
 	objTd = document.getElementById("OBJID_TD_MOB_CONF_DEBUF_HEADER");
 	if (bSet) {
@@ -1394,10 +1328,6 @@ function RefreshMobConfDebufSelectAreaHeader() {
 		objTd.setAttribute("bgcolor", COLOR_CODE_TABLE_HEADER_IS_NOT_SET);
 	}
 }
-
-
-
-
 
 /**
  * モンスター状態異常設定欄の選択状態により、コントロールのCSSを変更する.
@@ -1412,15 +1342,11 @@ function RefreshMobConfDebufControlCSS() {
 	var objSelect = null;
 	var objInput = null;
 
-
-
 	// モンスター状態異常設定定義をループして、設定欄の状態をもとに変数を同期
 	for (idx = 0; idx < MobConfDebufOBJ.length; idx++) {
 
 		confId = MobConfDebufOBJ[idx][MOB_CONF_DEBUF_DATA_INDEX_ID];
 		controlType = MobConfDebufOBJ[idx][MOB_CONF_DEBUF_DATA_INDEX_CONTROL_TYPE];
-
-
 
 		switch (controlType) {
 
@@ -1441,8 +1367,6 @@ function RefreshMobConfDebufControlCSS() {
 			}
 
 			break;
-
-
 
 		// 設定方法がチェック方式の場合
 		case CONTROL_TYPE_CHECKBOX:
@@ -1465,8 +1389,6 @@ function RefreshMobConfDebufControlCSS() {
 
 			break;
 
-
-
 		// 設定方法が数値入力方式の場合
 		case CONTROL_TYPE_TEXTBOX_NUMBER:
 		case CONTROL_TYPE_TEXTBOX_SPECIAL:
@@ -1484,8 +1406,6 @@ function RefreshMobConfDebufControlCSS() {
 			}
 
 			break;
-
-
 
 		// 設定方法が特殊方式の場合
 		case CONTROL_TYPE_SPECIAL:
