@@ -11547,6 +11547,18 @@ function GetStatusModifyHitPlus() {
 	}
 
 	//----------------------------------------------------------------
+	// 「コトネスカード」の、武器種別による効果（Hit ペナルティ）
+	//----------------------------------------------------------------
+	cardCountRight = CardNumSearch(CARD_ID_COTNESS, CARD_REGION_ID_ARMS_RIGHT_ANY);
+	cardCountLeft = CardNumSearch(CARD_ID_COTNESS, CARD_REGION_ID_ARMS_LEFT_ANY);
+	if ((cardCountRight > 0) || (cardCountLeft > 0)) {
+		if ((n_A_WeaponType == ITEM_KIND_FIST)) {
+			val -= (10 + 1 * n_A_Weapon_ATKplus) * cardCountRight;
+			val -= (10 + 1 * n_A_Weapon2_ATKplus) * cardCountLeft;
+		}
+	}
+	
+	//----------------------------------------------------------------
 	// 「ギガンテスカード」の、斧系統の効果
 	//----------------------------------------------------------------
 	cardCountRight = CardNumSearch(CARD_ID_GIGANTES, CARD_REGION_ID_ARMS_RIGHT_ANY);

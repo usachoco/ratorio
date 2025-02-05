@@ -3497,6 +3497,18 @@ if (_APPLY_UPDATE_LV200) {
 		}
 
 		//----------------------------------------------------------------
+		// 「コトネスカード」の、武器種別による効果　Cri+
+		//----------------------------------------------------------------
+		cardCountRight = CardNumSearch(CARD_ID_COTNESS, CARD_REGION_ID_ARMS_RIGHT_ANY);
+		cardCountLeft = CardNumSearch(CARD_ID_COTNESS, CARD_REGION_ID_ARMS_LEFT_ANY);
+		if ((cardCountRight > 0) || (cardCountLeft > 0)) {
+			if ((n_A_WeaponType == ITEM_KIND_FIST)) {
+				w += (10 + 1 * n_A_Weapon_ATKplus) * cardCountRight;
+				w += (10 + 1 * n_A_Weapon2_ATKplus) * cardCountLeft;
+			}
+		}
+
+		//----------------------------------------------------------------
 		// 「ペタルの尻尾　リス耳フード帽セット」の、過剰精錬による効果
 		//----------------------------------------------------------------
 		if (EquipNumSearch(ITEM_SET_ID_PETALNO_SHIPPO_RISUMIMI_HOOD_BO)) {
@@ -15021,6 +15033,18 @@ g_ITEM_SP_SKILL_CAST_TIME_value_forCalcData = w;
 			if (n_A_WeaponType == ITEM_KIND_BOW) {
 				n_tok[ITEM_SP_CRITICAL_DAMAGE_UP] += 1 * (10 + 1 * n_A_Weapon_ATKplus) * cardCountRight;
 				n_tok[ITEM_SP_CRITICAL_DAMAGE_UP] += 1 * (10 + 1 * n_A_Weapon2_ATKplus) * cardCountLeft;
+			}
+		}
+
+		//----------------------------------------------------------------
+		// 「コトネスカード」の、武器種別による効果 クリティカルダメージUP
+		//----------------------------------------------------------------
+		cardCountRight = CardNumSearch(CARD_ID_COTNESS, CARD_REGION_ID_ARMS_RIGHT_ANY);
+		cardCountLeft = CardNumSearch(CARD_ID_COTNESS, CARD_REGION_ID_ARMS_LEFT_ANY);
+		if ((cardCountRight > 0) || (cardCountLeft > 0)) {
+			if (n_A_WeaponType == ITEM_KIND_FIST) {
+				n_tok[ITEM_SP_CRITICAL_DAMAGE_UP] += (10 + 1 * n_A_Weapon_ATKplus) * cardCountRight;
+				n_tok[ITEM_SP_CRITICAL_DAMAGE_UP] += (10 + 1 * n_A_Weapon2_ATKplus) * cardCountLeft;
 			}
 		}
 
